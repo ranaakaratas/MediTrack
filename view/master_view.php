@@ -8,7 +8,24 @@
   </head>
   <body>
 
-    <?php require_once $page; ?>
+    <!-- Navbar with Logo -->
+    <nav class="navbar navbar-light bg-light">
+            <div class="container">
+               <div class="text-center">
+                      <h1 class="navbar-brand mb-0 h1">MediTrack</h1>
+                </div>
+                <a class="navbar-brand" href="#">
+                    
+                    <!-- <img src="view/images/medi.png" alt="MediTrack" height="50"> -->
+                </a>
+            </div>
+        </nav>
+
+        <div class="container mt-4">
+            <?php require_once $page; ?>
+        </div>
+
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   </body>
