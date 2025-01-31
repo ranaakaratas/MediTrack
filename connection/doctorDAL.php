@@ -33,6 +33,17 @@ class DoctorDAL {
         $stmt->bind_param("i", $id);
         return $stmt->execute();
     }
+
+    public function getDoctorById($doctorId) {
+        $query = $this->conn->prepare("
+            SELECT name, specialty, contactInfo, hospital 
+            FROM doctor 
+            WHERE id = ?
+        ");
+        $query->execute([$doctorId]);
+        return $query->fetch(PDO::FETCH_ASSOC);
+    }
+    
 }
 
 ?>

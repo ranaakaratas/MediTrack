@@ -5,7 +5,7 @@
 
         
             <h3 class="text-center mb-4">Login</h3>
-            <form method="post" action="test.php"> 
+            <form method="post" action="login.php"> 
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Email Address</label>
                     <div class="input-group">

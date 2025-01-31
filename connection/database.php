@@ -25,7 +25,7 @@ class Database
     // Prevent unserializing of the instance
     public function __wakeup() {}
 
-    // Public static method to get the single instance of the class
+    // Public static method to get the single instance of the class (singleton pattern)
     public static function getInstance()
     {
         if (self::$instance === null) {

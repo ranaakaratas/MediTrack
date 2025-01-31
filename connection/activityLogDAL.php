@@ -33,6 +33,18 @@ class ActivityLogDAL {
         $stmt->bind_param("i", $id);
         return $stmt->execute();
     }
+
+    public function getActivitiesByPatientId($patientId) {
+        $query = $this->conn->prepare("
+            SELECT activity.description AS activity, activitylog.timestamp 
+            FROM activitylog 
+            JOIN activity ON activitylog.activityId = activity.id 
+            WHERE activitylog.id = ?
+        ");
+        $query->execute([$patientId]);
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
 }
 
 

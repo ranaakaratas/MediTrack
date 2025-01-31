@@ -4,7 +4,7 @@ require_once "model/patient.php";
 require_once "connection/patientDAL.php";
 
 $title = "MediTrack Login";
-$page = "test_view.php";
+$page = "login_view.php";
 
 session_start();
 
@@ -18,15 +18,19 @@ if (isset($_REQUEST["email"]) && isset($_REQUEST["password"]))
     
     $patient = $patientDAL->getPatientByEmail($email);
     
+
     if ($patient != null && $patient->password == $password)
     {
+        // Store the logged-in patient in the session
         $_SESSION["patient"] = $patient;
-        echo("Login successful");
-
-        // here users need to be directed to the home page
-        // add that once you have the home page
-
+        $_SESSION["patient_id"] = $patient->id;
+        $_SESSION["patient_email"] = $patient->email;
+        
+        // Redirect to the personalized home page
+        header("Location: home.php");
+        exit();
     }
+
     else
     {
         $error = "Invalid email or password";

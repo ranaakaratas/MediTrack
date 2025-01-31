@@ -2,7 +2,7 @@
 
 
 require_once "database.php";
-
+require_once "patientDAL.php";
 
 class MoodLogDAL {
     private $conn;
@@ -27,5 +27,18 @@ class MoodLogDAL {
         $stmt->bind_param("iiiii", $moodLog->moodId, $moodLog->energyLevel, $moodLog->moodLevel, $moodLog->timestamp, $moodLog->id);
         return $stmt->execute();
     }
+
+
+    public function getMoodsByPatientId($patientId) {
+        $query = $this->conn->prepare("
+            SELECT mood.description AS mood, moodlog.energyLevel, moodlog.moodLevel, moodlog.timestamp 
+            FROM moodlog 
+            JOIN mood ON moodlog.moodId = mood.id 
+            WHERE moodlog.id = ?
+        ");
+        $query->execute([$patientId]);
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }
 ?>

@@ -11,13 +11,9 @@
     <!-- Navbar with Logo -->
     <nav class="navbar navbar-light bg-light">
             <div class="container">
-               <div class="text-center">
-                      <h1 class="navbar-brand mb-0 h1">MediTrack</h1>
+                <div class="d-flex justify-content-center w-100">
+                  <img src="view/images/medi_nobg.png" alt="MediTrack" height="50">
                 </div>
-                <a class="navbar-brand" href="#">
-                    
-                    <!-- <img src="view/images/medi.png" alt="MediTrack" height="50"> -->
-                </a>
             </div>
         </nav>
 

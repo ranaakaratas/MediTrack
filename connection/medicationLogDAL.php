@@ -35,5 +35,17 @@ class MedicationLogDAL {
         $stmt->bind_param("i", $id);
         return $stmt->execute();
     }
+
+    public function getMedicationsByPatientId($patientId) {
+        $query = $this->conn->prepare("
+            SELECT medication.name, medicationlog.timestamp, medicationlog.dosage 
+            FROM medicationlog 
+            JOIN medication ON medicationlog.medicationId = medication.id 
+            WHERE medicationlog.id IN (SELECT id FROM prescribedmedication WHERE patientId = ?)
+        ");
+        $query->execute([$patientId]);
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }
 ?>

@@ -25,6 +25,19 @@ class PatientDAL {
         $result = $statement->fetchAll(PDO::FETCH_CLASS, 'Patient');
         return count($result) == 0 ? null : $result[0];
     }
+
+    public function getPatientById($patientId) {
+        $statement = $this->conn->prepare("SELECT * FROM patient WHERE id = ?");
+        $statement->execute([$patientId]);
+    
+        // Fetch as an object
+        $statement->setFetchMode(PDO::FETCH_CLASS, 'Patient');
+        $patient = $statement->fetch();
+    
+        return $patient ?: null; // Ensure null is returned if no patient is found
+    }
+    
+
 }
 
 ?>
