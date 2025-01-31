@@ -2,7 +2,7 @@
 
 
 require_once "database.php";
-require_once "patientDAL.php";
+
 
 class MoodLogDAL {
     private $conn;
@@ -14,10 +14,20 @@ class MoodLogDAL {
 
     // Insert method
     public function insertMoodLog($moodLog) {
-        $sql = "INSERT INTO moodlog (id, moodId, energyLevel, moodLevel, timestamp) VALUES (?, ?, ?, ?, ?)";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("iiiii", $moodLog->id, $moodLog->moodId, $moodLog->energyLevel, $moodLog->moodLevel, $moodLog->timestamp);
-        return $stmt->execute();
+
+        $statement = $this->conn->prepare(
+            "INSERT INTO moodlog (moodId, energyLevel, moodLevel, timestamp) VALUES (?, ?, ?, ?)"
+        );
+        print_r($statement);
+        $statement->execute([
+            $moodLog->moodId, 
+            $moodLog->energyLevel, 
+            $moodLog->moodLevel, 
+            $moodLog->timestamp
+        ]);
+        
+        return $this->conn->lastInsertId();
+
     }
 
     // Update method

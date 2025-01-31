@@ -34,6 +34,12 @@
             <?php else: ?>
                 <p class="text-muted">No mood data available.</p>
             <?php endif; ?>
+            <div class="d-flex justify-content-end">
+                <a href="addMood.php">
+                    <button class="btn btn-primary">Log Mood</button>
+                </a>
+            </div>
+
         </div>
     </div>
 
@@ -55,6 +61,9 @@
             <?php else: ?>
                 <p class="text-muted">No activity data available.</p>
             <?php endif; ?>
+            <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary">Log new activity</button>
+            </div>
         </div>
     </div>
 
@@ -77,6 +86,9 @@
             <?php else: ?>
                 <p class="text-muted">No medication data available.</p>
             <?php endif; ?>
+            <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary">Log new medication</button>
+            </div>
         </div>
     </div>
 
