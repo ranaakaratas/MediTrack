@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 04, 2025 at 01:26 PM
+-- Generation Time: Jan 28, 2025 at 12:17 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -50,18 +50,17 @@ INSERT INTO `activity` (`id`, `description`) VALUES
 CREATE TABLE `activitylog` (
   `id` int(11) NOT NULL,
   `activityId` int(11) NOT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `patientId` int(11) NOT NULL
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `activitylog`
 --
 
-INSERT INTO `activitylog` (`id`, `activityId`, `timestamp`, `patientId`) VALUES
-(1, 1, '2025-02-04 12:20:38', 2),
-(2, 2, '2025-02-04 12:20:38', 2),
-(3, 3, '2025-02-04 12:20:38', 2);
+INSERT INTO `activitylog` (`id`, `activityId`, `timestamp`) VALUES
+(1, 1, '2024-01-01 07:00:00'),
+(2, 2, '2024-01-02 08:30:00'),
+(3, 3, '2024-01-03 18:00:00');
 
 -- --------------------------------------------------------
 
@@ -117,18 +116,17 @@ CREATE TABLE `medicationlog` (
   `id` int(11) NOT NULL,
   `medicationId` int(11) NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `dosage` double NOT NULL,
-  `patientId` int(11) NOT NULL
+  `dosage` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `medicationlog`
 --
 
-INSERT INTO `medicationlog` (`id`, `medicationId`, `timestamp`, `dosage`, `patientId`) VALUES
-(1, 1, '2025-02-04 12:21:33', 100, 2),
-(2, 2, '2025-02-04 12:21:33', 200, 2),
-(3, 3, '2025-02-04 12:21:33', 500, 2);
+INSERT INTO `medicationlog` (`id`, `medicationId`, `timestamp`, `dosage`) VALUES
+(1, 1, '2024-01-04 09:00:00', 100),
+(2, 2, '2024-01-05 14:30:00', 200),
+(3, 3, '2024-01-06 20:00:00', 500);
 
 -- --------------------------------------------------------
 
@@ -161,18 +159,17 @@ CREATE TABLE `moodlog` (
   `moodId` int(11) NOT NULL,
   `energyLevel` int(2) NOT NULL,
   `moodLevel` int(2) NOT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `patientId` int(11) NOT NULL
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `moodlog`
 --
 
-INSERT INTO `moodlog` (`id`, `moodId`, `energyLevel`, `moodLevel`, `timestamp`, `patientId`) VALUES
-(1, 1, 8, 9, '2025-02-04 12:22:16', 2),
-(2, 2, 5, 4, '2025-02-04 12:22:16', 2),
-(3, 3, 7, 8, '2025-02-04 12:22:16', 2);
+INSERT INTO `moodlog` (`id`, `moodId`, `energyLevel`, `moodLevel`, `timestamp`) VALUES
+(1, 1, 8, 9, '2024-01-07 10:00:00'),
+(2, 2, 5, 4, '2024-01-08 15:00:00'),
+(3, 3, 7, 8, '2024-01-09 21:00:00');
 
 -- --------------------------------------------------------
 
@@ -235,8 +232,7 @@ CREATE TABLE `symptomlog` (
   `id` int(11) NOT NULL,
   `symptomId` int(11) NOT NULL,
   `severity` int(2) NOT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `patientId` int(11) NOT NULL
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -254,8 +250,7 @@ ALTER TABLE `activity`
 --
 ALTER TABLE `activitylog`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `activityId` (`activityId`),
-  ADD KEY `fk_activitylog_patient` (`patientId`);
+  ADD KEY `activityId` (`activityId`);
 
 --
 -- Indexes for table `doctor`
@@ -274,8 +269,7 @@ ALTER TABLE `medication`
 --
 ALTER TABLE `medicationlog`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `medicationId` (`medicationId`),
-  ADD KEY `fk_medicationlog_patient` (`patientId`);
+  ADD KEY `medicationId` (`medicationId`);
 
 --
 -- Indexes for table `mood`
@@ -288,8 +282,7 @@ ALTER TABLE `mood`
 --
 ALTER TABLE `moodlog`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `moodId` (`moodId`),
-  ADD KEY `fk_moodlog_patient` (`patientId`);
+  ADD KEY `moodId` (`moodId`);
 
 --
 -- Indexes for table `patient`
@@ -317,8 +310,7 @@ ALTER TABLE `symptom`
 --
 ALTER TABLE `symptomlog`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `symptomId` (`symptomId`),
-  ADD KEY `fk_symptomlog_patient` (`patientId`);
+  ADD KEY `symptomId` (`symptomId`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -398,21 +390,18 @@ ALTER TABLE `symptomlog`
 -- Constraints for table `activitylog`
 --
 ALTER TABLE `activitylog`
-  ADD CONSTRAINT `activityId` FOREIGN KEY (`activityId`) REFERENCES `activity` (`id`),
-  ADD CONSTRAINT `fk_activitylog_patient` FOREIGN KEY (`patientId`) REFERENCES `patient` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `activityId` FOREIGN KEY (`activityId`) REFERENCES `activity` (`id`);
 
 --
 -- Constraints for table `medicationlog`
 --
 ALTER TABLE `medicationlog`
-  ADD CONSTRAINT `fk_medicationlog_patient` FOREIGN KEY (`patientId`) REFERENCES `patient` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `medicationId` FOREIGN KEY (`medicationId`) REFERENCES `medication` (`id`);
 
 --
 -- Constraints for table `moodlog`
 --
 ALTER TABLE `moodlog`
-  ADD CONSTRAINT `fk_moodlog_patient` FOREIGN KEY (`patientId`) REFERENCES `patient` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `moodId` FOREIGN KEY (`moodId`) REFERENCES `mood` (`id`);
 
 --
@@ -432,7 +421,6 @@ ALTER TABLE `prescribedmedication`
 -- Constraints for table `symptomlog`
 --
 ALTER TABLE `symptomlog`
-  ADD CONSTRAINT `fk_symptomlog_patient` FOREIGN KEY (`patientId`) REFERENCES `patient` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `symptomId` FOREIGN KEY (`symptomId`) REFERENCES `symptom` (`id`);
 COMMIT;
 

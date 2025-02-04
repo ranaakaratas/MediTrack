@@ -16,7 +16,7 @@ class MoodLogDAL {
     public function insertMoodLog($moodLog) {
 
         $statement = $this->conn->prepare(
-            "INSERT INTO moodlog (moodId, energyLevel, moodLevel, timestamp) VALUES (?, ?, ?, ?)"
+            "INSERT INTO moodlog(moodId, energyLevel, moodLevel, timestamp) VALUES (?, ?, ?, ?)"
         );
         print_r($statement);
         $statement->execute([
