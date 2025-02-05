@@ -1,25 +1,12 @@
 
-<head>
-    <title>Log Your Mood</title>
-</head>
-<body>
     <h2>Log Your Mood</h2>
     <form action="addMood.php" method="POST">
     <div class="mb-3">
         <label for="moodId">Select Your Mood:</label>
         <select class="form-select" id="moodId" name="moodId" required>
-            <?php
-            // Assuming you have an array of mood IDs and their descriptions
-            $moods = [
-                1 => '🙂 Happy',
-                2 => '😐 Anxious',
-                3 => '😭 Relaxed'
-            ];
-            
-            foreach ($moods as $id => $description) {
-                echo "<option value=\"$id\">$description</option>";
-            }
-            ?>
+            <?php foreach ($moods as $mood): ?>
+                <option value="<?= $mood->id ?>"><?= $mood->description ?></option>
+            <?php endforeach; ?>
         </select>
     </div>
     <div class="mb-3">
@@ -49,4 +36,3 @@
     <div class="mb-3">
         <a href="home.php">🔙 Back to Home</a>
     </div>
-</body>

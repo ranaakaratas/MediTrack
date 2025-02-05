@@ -12,17 +12,17 @@ class ActivityLogDAL {
 
     // Insert method
     public function insertActivityLog($activityLog) {
-        $sql = "INSERT INTO activitylog (id, activityId, timestamp) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO activitylog (id, activityId, timestamp, patientId) VALUES (?, ?, ?, ?)";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("iis", $activityLog->id, $activityLog->activityId, $activityLog->timestamp);
+        $stmt->bind_param("iisi", $activityLog->id, $activityLog->activityId, $activityLog->timestamp, $activityLog->patientId);
         return $stmt->execute();
     }
 
     // Update method
     public function updateActivityLog($activityLog) {
-        $sql = "UPDATE activitylog SET activityId = ?, timestamp = ? WHERE id = ?";
+        $sql = "UPDATE activitylog SET activityId = ?, timestamp = ?, patientId = ? WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("isi", $activityLog->activityId, $activityLog->timestamp, $activityLog->id);
+        $stmt->bind_param("isii", $activityLog->activityId, $activityLog->timestamp, $activityLog->patientId, $activityLog->id);
         return $stmt->execute();
     }
 
@@ -34,18 +34,26 @@ class ActivityLogDAL {
         return $stmt->execute();
     }
 
-    public function getActivitiesByPatientId($patientId) {
-        $query = $this->conn->prepare("
-            SELECT activity.description AS activity, activitylog.timestamp 
-            FROM activitylog 
-            JOIN activity ON activitylog.activityId = activity.id 
-            WHERE activitylog.id = ?
-        ");
-        $query->execute([$patientId]);
-        return $query->fetchAll(PDO::FETCH_ASSOC);
+    // Get activity log by ID
+    public function getActivityLogById($id) {
+        $query = $this->conn->prepare("SELECT * FROM activitylog WHERE id = ?");
+        $query->execute([$id]);
+        $result = $query->fetchAll(PDO::FETCH_CLASS, "ActivityLog");
+        return count($result) == 0 ? null : $result[0];
     }
-    
-}
 
+    // Get all activity logs
+    public function getAllActivityLogs() {
+        $query = $this->conn->prepare("SELECT * FROM activitylog");
+        $query->execute();
+        return $query->fetchAll(PDO::FETCH_CLASS,"ActivityLog");
+    }
+
+    public function getActivityLogsByPatientId($patientId) {
+        $query = $this->conn->prepare("SELECT * FROM activitylog WHERE patientId = ?");
+        $query->execute([$patientId]);
+        return $query->fetchAll(PDO::FETCH_CLASS,"ActivityLog");
+    }
+}
 
 ?>

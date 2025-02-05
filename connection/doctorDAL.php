@@ -34,16 +34,20 @@ class DoctorDAL {
         return $stmt->execute();
     }
 
-    public function getDoctorById($doctorId) {
-        $query = $this->conn->prepare("
-            SELECT name, specialty, contactInfo, hospital 
-            FROM doctor 
-            WHERE id = ?
-        ");
-        $query->execute([$doctorId]);
-        return $query->fetch(PDO::FETCH_ASSOC);
+    // Get doctor by ID
+    public function getDoctorById($id) {
+        $query = $this->conn->prepare("SELECT * FROM doctor WHERE id = ?");
+        $query->execute([$id]);
+        $result = $query->fetchAll(PDO::FETCH_CLASS, "Doctor");
+        return count($result) == 0 ? null : $result[0];
     }
-    
+
+    // Get all doctors
+    public function getAllDoctors() {
+        $query = $this->conn->prepare("SELECT * FROM doctor");
+        $query->execute();
+        return $query->fetchAll(PDO::FETCH_CLASS,"Doctor");
+    }
 }
 
 ?>

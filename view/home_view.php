@@ -7,10 +7,10 @@
             <h4>Your Doctor</h4>
         </div>
         <div class="card-body">
-            <p><strong>Name:</strong> <?= htmlspecialchars($doctor['name']) ?></p>
-            <p><strong>Specialty:</strong> <?= htmlspecialchars($doctor['specialty']) ?></p>
-            <p><strong>Contact Info:</strong> <?= htmlspecialchars($doctor['contactInfo']) ?></p>
-            <p><strong>Hospital:</strong> <?= htmlspecialchars($doctor['hospital']) ?></p>
+            <p><strong>Name:</strong> <?= htmlspecialchars($doctor->name) ?></p>
+            <p><strong>Specialty:</strong> <?= htmlspecialchars($doctor->specialty) ?></p>
+            <p><strong>Contact Info:</strong> <?= htmlspecialchars($doctor->contactInfo) ?></p>
+            <p><strong>Hospital:</strong> <?= htmlspecialchars($doctor->hospital) ?></p>
         </div>
     </div>
 
@@ -20,14 +20,14 @@
             <h4>Your Moods</h4>
         </div>
         <div class="card-body">
-            <?php if (!empty($moods)): ?>
+            <?php if (!empty($moodLogs)): ?>
                 <ul class="list-group">
-                    <?php foreach ($moods as $mood): ?>
+                    <?php foreach ($moodLogs as $moodLog): ?>
                         <li class="list-group-item">
-                            <strong>Mood:</strong> <?= htmlspecialchars($mood['mood']) ?> |
-                            <strong>Energy Level:</strong> <?= htmlspecialchars($mood['energyLevel']) ?> |
-                            <strong>Mood Level:</strong> <?= htmlspecialchars($mood['moodLevel']) ?> |
-                            <strong>Timestamp:</strong> <?= htmlspecialchars($mood['timestamp']) ?>
+                            <strong>Mood:</strong> <?= htmlspecialchars($moodLog->mood->description) ?> |
+                            <strong>Energy Level:</strong> <?= htmlspecialchars($moodLog->energyLevel) ?> |
+                            <strong>Mood Level:</strong> <?= htmlspecialchars($moodLog->moodLevel) ?> |
+                            <strong>Timestamp:</strong> <?= htmlspecialchars($moodLog->timestamp) ?>
                         </li>
                     <?php endforeach; ?>
                 </ul>
@@ -49,12 +49,12 @@
             <h4>Your Activities</h4>
         </div>
         <div class="card-body">
-            <?php if (!empty($activities)): ?>
+            <?php if (!empty($activityLogs)): ?>
                 <ul class="list-group">
-                    <?php foreach ($activities as $activity): ?>
+                    <?php foreach ($activityLogs as $activityLog): ?>
                         <li class="list-group-item">
-                            <strong>Activity:</strong> <?= htmlspecialchars($activity['activity']) ?> |
-                            <strong>Timestamp:</strong> <?= htmlspecialchars($activity['timestamp']) ?>
+                            <strong>Activity:</strong> <?= htmlspecialchars($activityLog->activity->description) ?> |
+                            <strong>Timestamp:</strong> <?= htmlspecialchars($activityLog->timestamp) ?>
                         </li>
                     <?php endforeach; ?>
                 </ul>

@@ -33,6 +33,21 @@ class ActivityDAL {
         $stmt->bind_param("i", $id);
         return $stmt->execute();
     }
+
+    // Get activity by ID
+    public function getActivityById($id) {
+        $query = $this->conn->prepare("SELECT * FROM activity WHERE id = ?");
+        $query->execute([$id]);
+        $result = $query->fetchAll(PDO::FETCH_CLASS, "Activity");
+        return count($result) == 0 ? null : $result[0];
+    }
+
+    // Get all activities
+    public function getAllActivities() {
+        $query = $this->conn->prepare("SELECT * FROM activity");
+        $query->execute();
+        return $query->fetchAll(PDO::FETCH_CLASS,"Activity");
+    }
 }
 
 ?>

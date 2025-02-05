@@ -1,8 +1,6 @@
 <?php
 
-
 require_once "database.php";
-
 
 class MoodLogDAL {
     private $conn;
@@ -14,41 +12,56 @@ class MoodLogDAL {
 
     // Insert method
     public function insertMoodLog($moodLog) {
-
-        $statement = $this->conn->prepare(
-            "INSERT INTO moodlog(moodId, energyLevel, moodLevel, timestamp) VALUES (?, ?, ?, ?)"
-        );
-        print_r($statement);
+        $statement = $this->conn->prepare('INSERT INTO moodlog (id, moodId, energyLevel, moodLevel, timestamp, patientId) 
+                            VALUES (?, ?, ?, ?, ?, ?)');
         $statement->execute([
-            $moodLog->moodId, 
-            $moodLog->energyLevel, 
-            $moodLog->moodLevel, 
-            $moodLog->timestamp
+            $moodLog->id,
+            $moodLog->moodId,
+            $moodLog->energyLevel,
+            $moodLog->moodLevel,
+            $moodLog->timestamp,
+            $moodLog->patientId
         ]);
-        
-        return $this->conn->lastInsertId();
 
+    return $this->conn->lastInsertId();
     }
 
     // Update method
     public function updateMoodLog($moodLog) {
-        $sql = "UPDATE moodlog SET moodId = ?, energyLevel = ?, moodLevel = ?, timestamp = ? WHERE id = ?";
+        $sql = "UPDATE moodlog SET moodId = ?, energyLevel = ?, moodLevel = ?, timestamp = ?, patientId = ? WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("iiiii", $moodLog->moodId, $moodLog->energyLevel, $moodLog->moodLevel, $moodLog->timestamp, $moodLog->id);
+        $stmt->bind_param("iiiisi", $moodLog->moodId, $moodLog->energyLevel, $moodLog->moodLevel, $moodLog->timestamp, $moodLog->patientId, $moodLog->id);
         return $stmt->execute();
     }
 
-
-    public function getMoodsByPatientId($patientId) {
-        $query = $this->conn->prepare("
-            SELECT mood.description AS mood, moodlog.energyLevel, moodlog.moodLevel, moodlog.timestamp 
-            FROM moodlog 
-            JOIN mood ON moodlog.moodId = mood.id 
-            WHERE moodlog.id = ?
-        ");
-        $query->execute([$patientId]);
-        return $query->fetchAll(PDO::FETCH_ASSOC);
+    // Remove method
+    public function removeMoodLog($id) {
+        $sql = "DELETE FROM moodlog WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+        return $stmt->execute();
     }
 
+    // Get mood log by ID
+    public function getMoodLogById($id) {
+        $query = $this->conn->prepare("SELECT * FROM moodlog WHERE id = ?");
+        $query->execute([$id]);
+        $result = $query->fetchAll(PDO::FETCH_CLASS, "MoodLog");
+        return count($result) == 0 ? null : $result[0];
+    }
+
+    // Get all mood logs
+    public function getAllMoodLogs() {
+        $query = $this->conn->prepare("SELECT * FROM moodlog");
+        $query->execute();
+        return $query->fetchAll(PDO::FETCH_CLASS,"MoodLog");
+    }
+
+    public function getMoodLogsByPatientId($patientId) {
+        $query = $this->conn->prepare("SELECT * FROM moodlog WHERE patientId = ?");
+        $query->execute([$patientId]);
+        return $query->fetchAll(PDO::FETCH_CLASS,"MoodLog");
+    }
 }
+
 ?>

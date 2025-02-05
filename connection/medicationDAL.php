@@ -1,7 +1,6 @@
 <?php
 
-require_once "dataAccess.php";
-
+require_once "database.php";
 
 class MedicationDAL {
     private $conn;
@@ -34,7 +33,21 @@ class MedicationDAL {
         $stmt->bind_param("i", $id);
         return $stmt->execute();
     }
-}
 
+    // Get medication by ID
+    public function getMedicationById($id) {
+        $query = $this->conn->prepare("SELECT * FROM medication WHERE id = ?");
+        $query->execute([$id]);
+        $result = $query->fetchAll(PDO::FETCH_CLASS, "Medication");
+        return count($result) == 0 ? null : $result[0];
+    }
+
+    // Get all medications
+    public function getAllMedications() {
+        $query = $this->conn->prepare("SELECT * FROM medication");
+        $query->execute();
+        return $query->fetchAll(PDO::FETCH_CLASS,"Medication");
+    }
+}
 
 ?>

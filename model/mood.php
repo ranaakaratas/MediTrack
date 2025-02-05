@@ -1,8 +1,8 @@
 <?php
-class Symptom {
+class Mood {
     // Private properties representing database fields
-    private $id; // Unique identifier for the symptom entry
-    private $description; // Description of the symptom
+    private $id; // Unique identifier for the mood entry
+    private $description; // Description of the mood
 
     // Method to get full details as a formatted string
     public function getFullDetails() {

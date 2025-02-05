@@ -1,8 +1,6 @@
 <?php
 
-
 require_once "database.php";
-
 
 class MoodDAL {
     private $conn;
@@ -35,5 +33,21 @@ class MoodDAL {
         $stmt->bind_param("i", $id);
         return $stmt->execute();
     }
+
+    // Get mood by ID
+    public function getMoodById($id) {
+        $query = $this->conn->prepare("SELECT * FROM mood WHERE id = ?");
+        $query->execute([$id]);
+        $result = $query->fetchAll(PDO::FETCH_CLASS, "Mood");
+        return count($result) == 0 ? null : $result[0];
+    }
+
+    // Get all moods
+    public function getAllMoods() {
+        $query = $this->conn->prepare("SELECT * FROM mood");
+        $query->execute();
+        return $query->fetchAll(PDO::FETCH_CLASS,"Mood");
+    }
 }
+
 ?>
