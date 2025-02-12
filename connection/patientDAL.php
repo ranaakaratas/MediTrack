@@ -14,24 +14,41 @@ class PatientDAL {
     public function insertPatient($patient) {
         $sql = "INSERT INTO patient (id, dob, name, gender, phoneNo, medicalNotes, doctorId, email, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("issssssss", $patient->id, $patient->dob, $patient->name, $patient->gender, $patient->phoneNo, $patient->medicalNotes, $patient->doctorId, $patient->email, $patient->password);
-        return $stmt->execute();
+        return $stmt->execute([
+            $patient->id,
+            $patient->dob,
+            $patient->name,
+            $patient->gender,
+            $patient->phoneNo,
+            $patient->medicalNotes,
+            $patient->doctorId,
+            $patient->email,
+            $patient->password
+        ]);
     }
 
     // Update method
     public function updatePatient($patient) {
         $sql = "UPDATE patient SET dob = ?, name = ?, gender = ?, phoneNo = ?, medicalNotes = ?, doctorId = ?, email = ?, password = ? WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("ssssssssi", $patient->dob, $patient->name, $patient->gender, $patient->phoneNo, $patient->medicalNotes, $patient->doctorId, $patient->email, $patient->password, $patient->id);
-        return $stmt->execute();
+        return $stmt->execute([
+            $patient->dob,
+            $patient->name,
+            $patient->gender,
+            $patient->phoneNo,
+            $patient->medicalNotes,
+            $patient->doctorId,
+            $patient->email,
+            $patient->password,
+            $patient->id
+        ]);
     }
 
     // Remove method
     public function removePatient($id) {
         $sql = "DELETE FROM patient WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("i", $id);
-        return $stmt->execute();
+        return $stmt->execute([$id]);
     }
 
     // Get patient by ID

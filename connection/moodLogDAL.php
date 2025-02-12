@@ -30,17 +30,23 @@ class MoodLogDAL {
     public function updateMoodLog($moodLog) {
         $sql = "UPDATE moodlog SET moodId = ?, energyLevel = ?, moodLevel = ?, timestamp = ?, patientId = ? WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("iiiisi", $moodLog->moodId, $moodLog->energyLevel, $moodLog->moodLevel, $moodLog->timestamp, $moodLog->patientId, $moodLog->id);
-        return $stmt->execute();
+        return $stmt->execute([
+            $moodLog->moodId, 
+            $moodLog->energyLevel, 
+            $moodLog->moodLevel, 
+            $moodLog->timestamp, 
+            $moodLog->patientId, 
+            $moodLog->id
+        ]);
     }
 
     // Remove method
     public function removeMoodLog($id) {
         $sql = "DELETE FROM moodlog WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("i", $id);
-        return $stmt->execute();
+        return $stmt->execute([$id]);
     }
+
 
     // Get mood log by ID
     public function getMoodLogById($id) {

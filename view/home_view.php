@@ -62,7 +62,9 @@
                 <p class="text-muted">No activity data available.</p>
             <?php endif; ?>
             <div class="d-flex justify-content-end">
-                <button type="submit" class="btn btn-primary">Log new activity</button>
+                 <a href="addactivity.php">
+                    <button class="btn btn-primary">Log Activity</button>
+                </a>
             </div>
         </div>
     </div>

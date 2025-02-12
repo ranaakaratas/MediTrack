@@ -14,25 +14,35 @@ class MedicationLogDAL {
     public function insertMedicationLog($medicationLog) {
         $sql = "INSERT INTO medicationlog (id, medicationId, timestamp, dosage, patientId) VALUES (?, ?, ?, ?, ?)";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("iisdi", $medicationLog->id, $medicationLog->medicationId, $medicationLog->timestamp, $medicationLog->dosage, $medicationLog->patientId);
-        return $stmt->execute();
+        return $stmt->execute([
+            $medicationLog->id,
+            $medicationLog->medicationId,
+            $medicationLog->timestamp,
+            $medicationLog->dosage,
+            $medicationLog->patientId
+        ]);
     }
 
     // Update method
     public function updateMedicationLog($medicationLog) {
         $sql = "UPDATE medicationlog SET medicationId = ?, timestamp = ?, dosage = ?, patientId = ? WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("isdii", $medicationLog->medicationId, $medicationLog->timestamp, $medicationLog->dosage, $medicationLog->patientId, $medicationLog->id);
-        return $stmt->execute();
+        return $stmt->execute([
+            $medicationLog->medicationId,
+            $medicationLog->timestamp,
+            $medicationLog->dosage,
+            $medicationLog->patientId,
+            $medicationLog->id
+        ]);
     }
 
     // Remove method
     public function removeMedicationLog($id) {
         $sql = "DELETE FROM medicationlog WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("i", $id);
-        return $stmt->execute();
+        return $stmt->execute([$id]);
     }
+    
 
     // Get medication log by ID
     public function getMedicationLogById($id) {

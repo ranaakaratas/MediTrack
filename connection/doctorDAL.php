@@ -14,24 +14,33 @@ class DoctorDAL {
     public function insertDoctor($doctor) {
         $sql = "INSERT INTO doctor (id, name, specialty, contactInfo, hospital) VALUES (?, ?, ?, ?, ?)";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("issss", $doctor->id, $doctor->name, $doctor->specialty, $doctor->contactInfo, $doctor->hospital);
-        return $stmt->execute();
+        return $stmt->execute([
+            $doctor->id,
+            $doctor->name,
+            $doctor->specialty,
+            $doctor->contactInfo,
+            $doctor->hospital
+        ]);
     }
 
     // Update method
     public function updateDoctor($doctor) {
         $sql = "UPDATE doctor SET name = ?, specialty = ?, contactInfo = ?, hospital = ? WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("ssssi", $doctor->name, $doctor->specialty, $doctor->contactInfo, $doctor->hospital, $doctor->id);
-        return $stmt->execute();
+        return $stmt->execute([
+            $doctor->name,
+            $doctor->specialty,
+            $doctor->contactInfo,
+            $doctor->hospital,
+            $doctor->id
+        ]);
     }
 
     // Remove method
     public function removeDoctor($id) {
         $sql = "DELETE FROM doctor WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("i", $id);
-        return $stmt->execute();
+        return $stmt->execute([$id]);
     }
 
     // Get doctor by ID

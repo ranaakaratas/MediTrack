@@ -14,24 +14,31 @@ class ActivityLogDAL {
     public function insertActivityLog($activityLog) {
         $sql = "INSERT INTO activitylog (id, activityId, timestamp, patientId) VALUES (?, ?, ?, ?)";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("iisi", $activityLog->id, $activityLog->activityId, $activityLog->timestamp, $activityLog->patientId);
-        return $stmt->execute();
+        return $stmt->execute([
+            $activityLog->id,
+            $activityLog->activityId,
+            $activityLog->timestamp,
+            $activityLog->patientId
+        ]);
     }
 
     // Update method
     public function updateActivityLog($activityLog) {
         $sql = "UPDATE activitylog SET activityId = ?, timestamp = ?, patientId = ? WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("isii", $activityLog->activityId, $activityLog->timestamp, $activityLog->patientId, $activityLog->id);
-        return $stmt->execute();
+        return $stmt->execute([
+            $activityLog->activityId,
+            $activityLog->timestamp,
+            $activityLog->patientId,
+            $activityLog->id
+        ]);
     }
 
     // Remove method
     public function removeActivityLog($id) {
         $sql = "DELETE FROM activitylog WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("i", $id);
-        return $stmt->execute();
+        return $stmt->execute([$id]);
     }
 
     // Get activity log by ID

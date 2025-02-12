@@ -14,24 +14,27 @@ class MedicationDAL {
     public function insertMedication($medication) {
         $sql = "INSERT INTO medication (id, name) VALUES (?, ?)";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("is", $medication->id, $medication->name);
-        return $stmt->execute();
+        return $stmt->execute([
+            $medication->id,
+            $medication->name
+        ]);
     }
 
     // Update method
     public function updateMedication($medication) {
         $sql = "UPDATE medication SET name = ? WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("si", $medication->name, $medication->id);
-        return $stmt->execute();
+        return $stmt->execute([
+            $medication->name,
+            $medication->id
+        ]);
     }
 
     // Remove method
     public function removeMedication($id) {
         $sql = "DELETE FROM medication WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("i", $id);
-        return $stmt->execute();
+        return $stmt->execute([$id]);
     }
 
     // Get medication by ID

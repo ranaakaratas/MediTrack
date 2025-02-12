@@ -14,24 +14,27 @@ class ActivityDAL {
     public function insertActivity($activity) {
         $sql = "INSERT INTO activity (id, description) VALUES (?, ?)";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("is", $activity->id, $activity->description);
-        return $stmt->execute();
+        return $stmt->execute([
+            $activity->id,
+            $activity->description
+        ]);
     }
 
     // Update method
     public function updateActivity($activity) {
         $sql = "UPDATE activity SET description = ? WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("si", $activity->description, $activity->id);
-        return $stmt->execute();
+        return $stmt->execute([
+            $activity->description,
+            $activity->id
+        ]);
     }
 
     // Remove method
     public function removeActivity($id) {
         $sql = "DELETE FROM activity WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("i", $id);
-        return $stmt->execute();
+        return $stmt->execute([$id]);
     }
 
     // Get activity by ID
