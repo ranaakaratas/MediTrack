@@ -1,7 +1,7 @@
 <?php
 
 $title = "Log your medication";
-$page = "view/addmedication_view.php";
+$page = "addmedication_view.php";
 
 require_once 'model/patient.php';
 require_once 'model/medication.php';
@@ -30,6 +30,7 @@ if (!empty($_REQUEST)) {
     // Create a MedicationLog object
     $medicationLog = new MedicationLog();
     $medicationLog->medicationId = $medicationId;
+    $medicationLog->dosage = $dosage;
     $medicationLog->timestamp = date('Y-m-d H:i:s');
     $medicationLog->patientId = $patient->id;
 

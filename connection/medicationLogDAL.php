@@ -12,13 +12,13 @@ class MedicationLogDAL {
 
     // Insert method
     public function insertMedicationLog($medicationLog) {
-        $sql = "INSERT INTO medicationlog (id, medicationId, timestamp, dosage, patientId) VALUES (?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO medicationlog (id, medicationId, dosage, timestamp, patientId) VALUES (?, ?, ?, ?, ?)";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute([
             $medicationLog->id,
             $medicationLog->medicationId,
-            $medicationLog->timestamp,
             $medicationLog->dosage,
+            $medicationLog->timestamp,
             $medicationLog->patientId
         ]);
     }

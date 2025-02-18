@@ -22,8 +22,9 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary w-100">Login</button>
+        
                 <div class="text-center mt-3">
-                    <a href="#" class="text-decoration-none">Forgot Password?</a>
+                    <a href="signup.php" class="text-decoration-none">Don't have an account?</a>
                 </div>
 
             </form>
