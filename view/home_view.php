@@ -89,7 +89,9 @@
                 <p class="text-muted">No medication data available.</p>
             <?php endif; ?>
             <div class="d-flex justify-content-end">
-                <button type="submit" class="btn btn-primary">Log new medication</button>
+                <a href="addmedication.php">
+                    <button class="btn btn-primary">Log Medication</button>
+                </a>
             </div>
         </div>
     </div>
