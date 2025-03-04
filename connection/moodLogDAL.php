@@ -47,7 +47,15 @@ class MoodLogDAL {
         return $stmt->execute([$id]);
     }
 
+    public function getMoodsByDate($date) {
+        $query = "SELECT * FROM moodLog WHERE DATE(timestamp) = :date ORDER BY timestamp DESC";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute(['date' => $date]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
+    
+    
     // Get mood log by ID
     public function getMoodLogById($id) {
         $query = $this->conn->prepare("SELECT * FROM moodlog WHERE id = ?");

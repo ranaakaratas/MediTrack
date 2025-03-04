@@ -8,6 +8,7 @@ require "model/doctor.php";
 require "model/mood.php";
 require "model/activity.php";
 
+
 $title = "MediTrack Home Page";
 $page = "home_view.php";
 
@@ -17,6 +18,7 @@ if (!isset($_SESSION["patient"])) {
     header("Location: login.php"); // Redirect if not authenticated
     exit();
 }
+
 
 require_once "connection/patientDAL.php";
 require_once "connection/moodLogDAL.php";
@@ -54,6 +56,9 @@ foreach ($activityLogs as $activityLog) {
 $doctor = $doctorDAL->getDoctorById($patient->doctorId);
 //$patient->doctor = $doctor;
 
+// Fetch moods for the selected date
+$selectedDate = isset($_GET['date']) ? $_GET['date'] : date('Y-m-d');
+$moods = $moodLogDAL->getMoodsByDate($selectedDate);
 
 
 require_once "view/master_view.php";
