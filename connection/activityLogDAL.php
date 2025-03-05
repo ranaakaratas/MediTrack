@@ -10,6 +10,14 @@ class ActivityLogDAL {
         $this->conn = $db->getConnection(); // Get the PDO connection
     }
 
+    public function getActivitiesByDate($date) {
+        $sql = "SELECT * FROM activityLog WHERE DATE(timestamp) = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$date]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
+
     // Insert method
     public function insertActivityLog($activityLog) {
         $sql = "INSERT INTO activitylog (id, activityId, timestamp, patientId) VALUES (?, ?, ?, ?)";

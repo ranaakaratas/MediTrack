@@ -10,6 +10,14 @@ class MoodLogDAL {
         $this->conn = $db->getConnection(); // Get the PDO connection
     }
 
+    public function getMoodsByDate($date) {
+        $sql = "SELECT * FROM moodLog WHERE DATE(timestamp) = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$date]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC); // Fetch as associative array
+    }
+    
+
     // Insert method
     public function insertMoodLog($moodLog) {
         $statement = $this->conn->prepare('INSERT INTO moodlog (id, moodId, energyLevel, moodLevel, timestamp, patientId) 
@@ -47,12 +55,12 @@ class MoodLogDAL {
         return $stmt->execute([$id]);
     }
 
-    public function getMoodsByDate($date) {
+    /* public function getMoodsByDate($date) {
         $query = "SELECT * FROM moodLog WHERE DATE(timestamp) = :date ORDER BY timestamp DESC";
         $stmt = $this->conn->prepare($query);
         $stmt->execute(['date' => $date]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+    } */
 
     
     

@@ -28,6 +28,12 @@ require_once "connection/doctorDAL.php";
 require_once "connection/moodDAL.php";
 require_once "connection/activityDAL.php";
 
+
+// Get selected date from URL or default to today
+$selected_date = isset($_GET['date']) ? $_GET['date'] : date('Y-m-d');
+$formatted_date = date('Y-m-d', strtotime($selected_date));
+
+
 $patientDAL = new PatientDAL();
 $moodLogDAL = new MoodLogDAL();
 $activityLogDAL = new ActivityLogDAL();
@@ -38,6 +44,14 @@ $activityDAL = new ActivityDAL();
 
 // Fetch patient details
 $patient = $_SESSION["patient"];
+
+
+// Fetch logs for selected date
+$mood_result = $moodLogDAL->getMoodsByDate($formatted_date);
+$activity_result = $activityLogDAL->getActivitiesByDate($formatted_date);
+$medication_result = $medicationLogDAL->getMedicationsByDate($formatted_date);
+
+
 
 // Fetch mood logs
 $moodLogs = $moodLogDAL->getMoodLogsByPatientId($patient->id);

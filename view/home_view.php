@@ -5,113 +5,122 @@
 
     
     <!-- Date Selector -->
+     <!-- Date Selection Buttons -->
     <div class="d-flex justify-content-center my-3">
-        <div class="btn-group" role="group" aria-label="Date Selector">
-            <button type="button" class="btn btn-outline-secondary"> <?= date('l', strtotime('-2 days')) ?>  <br>  <?= date('d F', strtotime('-2 days')) ?></button>
-            <button type="button" class="btn btn-outline-secondary"> <?= date('l', strtotime('-1 days')) ?>  <br>  <?= date('d F', strtotime('-1 days')) ?></button>
-            <button type="button" class="btn btn-primary">  <?= date('l', strtotime('0 days')) ?>  <br>  <?= date('d F', strtotime('0 days')) ?></button>
-            <button type="button" class="btn btn-outline-secondary"> <?= date('l', strtotime('+1 days')) ?>  <br>  <?= date('d F', strtotime('+1 days')) ?></button>
-            <button type="button" class="btn btn-outline-secondary"> <?= date('l', strtotime('+2 days')) ?>  <br>  <?= date('d F', strtotime('+2 days')) ?></button>
-
-        </div>
+        <?php for ($i = -2; $i <= 2; $i++): 
+            $date = date('Y-m-d', strtotime("$i days")); 
+            $label = date('D, d M', strtotime($date));
+        ?>
+            <button class="btn mx-2 <?= ($date == $selected_date) ? 'btn-primary' : 'btn-outline-primary' ?> date-button" 
+                    data-date="<?= $date ?>">
+                <?= $label ?>
+            </button>
+        <?php endfor; ?>
     </div>
     
-    
-    <!-- Doctor Details Section -->
-    <div class="card mb-4">
-        <div class="card-header">
-            <h4>Your Doctor</h4>
+    <!-- Mood Log Container -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Your Moods</h5>
         </div>
-        <div class="card-body">
-            <p><strong>Name:</strong> <?= htmlspecialchars($doctor->name) ?></p>
-            <p><strong>Specialty:</strong> <?= htmlspecialchars($doctor->specialty) ?></p>
-            <p><strong>Contact Info:</strong> <?= htmlspecialchars($doctor->contactInfo) ?></p>
-            <p><strong>Hospital:</strong> <?= htmlspecialchars($doctor->hospital) ?></p>
-        </div>
-    </div>
-
-    <!-- Moods Section -->
-    <div class="card mb-4">
-        <div class="card-header">
-            <h4>Your Moods</h4>
-        </div>
-        <div class="card-body">
-            <?php if (!empty($moods)): ?>
-                <ul class="list-group">
-                    <?php foreach ($moods as $mood): ?>
-                        <li class="list-group-item">
-                            <strong>Mood:</strong> <?= htmlspecialchars($moodLog->mood->description) ?> 
-                            <strong>Energy Level:</strong> <?= htmlspecialchars($moodLog->energyLevel) ?>
-                            <strong>Timestamp:</strong> <?= htmlspecialchars($moodLog->timestamp) ?>
-                        </li>
+            <div class="card-body">
+                <?php if (!empty($mood_result)): ?>
+                    <?php foreach ($mood_result as $row): ?>
+                        <div class="alert alert-info">
+                            <strong>Mood:</strong> <?= isset($row['mood']) ? "N/A" : htmlspecialchars($moodLog->mood->description); ?> |
+                            <strong>Energy Level:</strong> <?= isset($row['energy_level']) ? "N/A" : htmlspecialchars($moodLog->energyLevel); ?> |
+                            <strong>Timestamp:</strong> <?= isset($row['timestamp']) ? $row['timestamp'] : "N/A"; ?>
+                        </div>
                     <?php endforeach; ?>
-                </ul>
-            <?php else: ?>
-                <p>No moods logged for this date.</p>
-            <?php endif; ?>
-            <div class="d-flex justify-content-end">
-                 <a href="addmood.php">
-                    <button class="btn btn-primary">Log mood</button>
-                </a>
+                <?php else: ?>
+                    <p class="text-muted">No mood logs for this date.</p>
+                <?php endif; ?>
+
+                <div class="d-flex justify-content-end">
+                    <a href="addMood.php">
+                        <button class="btn btn-primary">Log Mood</button>
+                    </a>
+                </div>
+
             </div>
-        </div>
     </div>
 
-
-
-    <!-- Activities Section -->
-    <div class="card mb-4">
-        <div class="card-header">
-            <h4>Your Activities</h4>
+    <!-- Activity Log Container -->                   
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-warning text-white">
+            <h5 class="mb-0">Your Activities</h5>
         </div>
-        <div class="card-body">
-            <?php if (!empty($activityLogs)): ?>
-                <ul class="list-group">
-                    <?php foreach ($activityLogs as $activityLog): ?>
-                        <li class="list-group-item">
-                            <strong>Activity:</strong> <?= htmlspecialchars($activityLog->activity->description) ?> |
-                            <strong>Timestamp:</strong> <?= htmlspecialchars($activityLog->timestamp) ?>
-                        </li>
+            <div class="card-body">
+                <?php if (!empty($activity_result)): ?>
+                    <?php foreach ($activity_result as $row): ?>
+                        <div class="alert alert-secondary">
+                            <strong>Activity:</strong> <?= isset($row['activity']) ? "N/A" : htmlspecialchars($activityLog->activity->description) ; ?> |
+                            <strong>Timestamp:</strong> <?= isset($row['timestamp']) ? $row['timestamp'] : "N/A"; ?>
+                        </div>
                     <?php endforeach; ?>
-                </ul>
-            <?php else: ?>
-                <p class="text-muted">No activity data available.</p>
-            <?php endif; ?>
-            <div class="d-flex justify-content-end">
-                 <a href="addactivity.php">
-                    <button class="btn btn-primary">Log Activity</button>
-                </a>
+                <?php else: ?>
+                    <p class="text-muted">No activities logged for this date.</p>
+                <?php endif; ?>
+
+                <div class="d-flex justify-content-end">
+                    <a href="addActivity.php">
+                        <button class="btn btn-primary">Log Activity</button>
+                    </a>
+                </div>
+                
             </div>
-        </div>
     </div>
 
-    <!-- Medications Section -->
-    <div class="card mb-4">
-        <div class="card-header">
-            <h4>Your Medications</h4>
+    <!-- Medication Log Container -->
+    <div class="card shadow-sm">
+        <div class="card-header bg-success text-white">
+            <h5 class="mb-0">Your Medications</h5>
         </div>
-        <div class="card-body">
-            <?php if (!empty($medications)): ?>
-                <ul class="list-group">
-                    <?php foreach ($medications as $medication): ?>
-                        <li class="list-group-item">
-                            <strong>Medication:</strong> <?= htmlspecialchars($medication['name']) ?> |
-                            <strong>Dosage:</strong> <?= htmlspecialchars($medication['dosage']) ?> |
-                            <strong>Timestamp:</strong> <?= htmlspecialchars($medication['timestamp']) ?>
-                        </li>
+            <div class="card-body">
+                <?php if (!empty($medication_result)): ?>
+                    <?php foreach ($medication_result as $row): ?>
+                        <div class="alert alert-light border">
+                            <strong>Medication:</strong> <?= isset($row['medication']) ? htmlspecialchars($row['medication']) : "N/A"; ?> |
+                            <strong>Dosage:</strong> <?= isset($row['dosage']) ? $row['dosage'] : "N/A"; ?> |
+                            <strong>Timestamp:</strong> <?= isset($row['timestamp']) ? $row['timestamp'] : "N/A"; ?>
+                        </div>
                     <?php endforeach; ?>
-                </ul>
-            <?php else: ?>
-                <p class="text-muted">No medication data available.</p>
-            <?php endif; ?>
-            <div class="d-flex justify-content-end">
-                <a href="addmedication.php">
-                    <button class="btn btn-primary">Log Medication</button>
-                </a>
+                <?php else: ?>
+                    <p class="text-muted">No medications recorded for this date.</p>
+                <?php endif; ?>
+
+                <div class="d-flex justify-content-end">
+                    <a href="addMedication.php">
+                        <button class="btn btn-primary">Log Medication</button>
+                    </a>
+                </div>
+
             </div>
-        </div>
     </div>
 
+
+    </div>
+</div>
+
+<!-- AJAX Script for Dynamic Updates -->
+<script>
+$(document).ready(function() {
+    $(".date-button").click(function() {
+        var selectedDate = $(this).data("date");
+
+        $.ajax({
+            url: "home.php",
+            type: "GET",
+            data: { date: selectedDate },
+            success: function(response) {
+                $("#log-container").html($(response).find("#log-container").html());
+                $(".date-button").removeClass("btn-primary").addClass("btn-outline-primary");
+                $(this).removeClass("btn-outline-primary").addClass("btn-primary");
+            }
+        });
+    });
+});
+</script>
     <!-- Logout Button -->
     <div class="text-center">
         <a href="logout.php" class="btn btn-danger">Logout</a>

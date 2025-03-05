@@ -10,6 +10,15 @@ class MedicationLogDAL {
         $this->conn = $db->getConnection(); // Get the PDO connection
     }
 
+
+    public function getMedicationsByDate($date) {
+        $sql = "SELECT * FROM medicationLog WHERE DATE(timestamp) = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$date]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
+
     // Insert method
     public function insertMedicationLog($medicationLog) {
         $sql = "INSERT INTO medicationlog (id, medicationId, dosage, timestamp, patientId) VALUES (?, ?, ?, ?, ?)";
