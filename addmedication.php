@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 $title = "Log your medication";
 $page = "addmedication_view.php";
@@ -8,7 +8,6 @@ require_once 'model/medication.php';
 require_once 'model/medicationLog.php';
 require_once 'connection/medicationLogDAL.php';
 require_once 'connection/medicationDAL.php';
-
 
 session_start();
 
@@ -24,23 +23,35 @@ $patient = $_SESSION['patient'];
 $medicationDAL = new MedicationDAL();
 $medications = $medicationDAL->getAllMedications();
 
-if (!empty($_REQUEST)) {
-    $medicationId = $_REQUEST['medicationId'] ?? null;
+$error_message = "";
 
-    // Create a MedicationLog object
-    $medicationLog = new MedicationLog();
-    $medicationLog->medicationId = $medicationId;
-    $medicationLog->dosage = $dosage;
-    $medicationLog->timestamp = date('Y-m-d H:i:s');
-    $medicationLog->patientId = $patient->id;
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $medicationId = $_POST['medicationId'] ?? null;
+    $dosage = $_POST['dosage'] ?? null;
 
-    // Insert into database
-    $medicationLogDAL = new MedicationLogDAL();
-    $lastMedicationId = $medicationLogDAL->insertMedicationLog($medicationLog);
+    // Validate inputs
+    if (!$medicationId || !$dosage) {
+        $error_message = "All fields are required!";
+    } else {
+        // Create a MedicationLog object
+        $medicationLog = new MedicationLog();
+        $medicationLog->medicationId = $medicationId;
+        $medicationLog->dosage = $dosage;
+        $medicationLog->timestamp = date('Y-m-d H:i:s');
+        $medicationLog->patientId = $patient->id;
 
-    // Redirect after insertion
-    header("Location: home.php?success=Medication logged successfully");
-    exit();
+        // Insert into database
+        $medicationLogDAL = new MedicationLogDAL();
+        $lastMedicationId = $medicationLogDAL->insertMedicationLog($medicationLog);
+
+        if ($lastMedicationId) {
+            // Redirect after successful insertion
+            header("Location: home.php?success=Medication logged successfully");
+            exit();
+        } else {
+            $error_message = "Failed to log medication. Please try again.";
+        }
+    }
 }
 
 require_once "view/master_view.php";

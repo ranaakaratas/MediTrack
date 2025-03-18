@@ -9,7 +9,6 @@ require_once 'model/moodLog.php';
 require_once 'connection/moodLogDAL.php';
 require_once 'connection/moodDAL.php';
 
-
 session_start();
 
 // Ensure user is logged in
@@ -19,34 +18,42 @@ if (!isset($_SESSION['patient'])) {
 }
 
 $patient = $_SESSION['patient'];
-//print_r($patient);
 
 // Get all moods from the database
 $moodDAL = new MoodDAL();
 $moods = $moodDAL->getAllMoods();
 
-if (!empty($_REQUEST)) {
-    $moodId = $_REQUEST['moodId'] ?? null;
-    $energy_level = $_REQUEST['energy_level'] ?? null;
-    $mood_level = $_REQUEST['mood_level'] ?? null;
+$error_message = "";
 
-    // Create a Mood object
-    $moodLog = new MoodLog();
-    $moodLog->moodId = $moodId;
-    $moodLog->energyLevel = $energy_level;
-    $moodLog->moodLevel = $mood_level;
-    $moodLog->timestamp = date('Y-m-d H:i:s');
-    $moodLog->patientId = $patient->id;
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $moodId = $_POST['moodId'] ?? null;
+    $energy_level = $_POST['energy_level'] ?? null;
+    $mood_level = $_POST['mood_level'] ?? null;
 
-    //print_r($moodLog);
+    // Validate inputs
+    if (!$moodId || !$energy_level || !$mood_level) {
+        $error_message = "All fields are required!";
+    } else {
+        // Create a Mood object
+        $moodLog = new MoodLog();
+        $moodLog->moodId = $moodId;
+        $moodLog->energyLevel = $energy_level;
+        $moodLog->moodLevel = $mood_level;
+        $moodLog->timestamp = date('Y-m-d H:i:s');
+        $moodLog->patientId = $patient->id;
 
-    // Insert into database
-    $moodLogDAL = new MoodLogDAL();
-    $lastMoodId = $moodLogDAL->insertMoodLog($moodLog);
+        // Insert into database
+        $moodLogDAL = new MoodLogDAL();
+        $lastMoodId = $moodLogDAL->insertMoodLog($moodLog);
 
-    // Redirect after insertion
-    header("Location: home.php?success=Mood logged successfully");
-    exit();
+        if ($lastMoodId) {
+            // Redirect after successful insertion
+            header("Location: home.php?success=Mood logged successfully");
+            exit();
+        } else {
+            $error_message = "Failed to log mood. Please try again.";
+        }
+    }
 }
 
 require_once "view/master_view.php";

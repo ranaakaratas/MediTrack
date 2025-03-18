@@ -1,5 +1,10 @@
 
     <h2>Log Your Mood</h2>
+    
+    <?php if (!empty($error_message)): ?>
+    <div class="alert alert-danger"><?= htmlspecialchars($error_message) ?></div>
+    <?php endif; ?>
+
     <form action="addMood.php" method="POST">
     <div class="mb-3">
         <label for="moodId">Select Your Mood:</label>
