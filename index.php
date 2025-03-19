@@ -10,7 +10,7 @@ require "model/activity.php";
 
 
 $title = "MediTrack Home Page";
-$page = "home_view.php";
+$page = "index_view.php";
 
 session_start();
 

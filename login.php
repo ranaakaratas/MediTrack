@@ -22,7 +22,7 @@ if (isset($_REQUEST["email"]) && isset($_REQUEST["password"]))
         $_SESSION["patient"] = $patient;
         
         //Redirect to the personalized home page
-        header("Location: home.php");
+        header("Location: index.php");
         exit();
     }
     else
