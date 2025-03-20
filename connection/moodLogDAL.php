@@ -11,7 +11,7 @@ class MoodLogDAL {
     }
 
     public function getMoodsByDate($date) {
-        $sql = "SELECT * FROM moodLog WHERE DATE(timestamp) = ?";
+        $sql = "SELECT * FROM moodlog WHERE DATE(timestamp) = ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([$date]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC); // Fetch as associative array

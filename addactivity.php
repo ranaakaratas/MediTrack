@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($lastActivityId) {
             // Redirect after successful insertion
-            header("Location: home.php?success=Activity logged successfully");
+            header("Location: index.php?success=Activity logged successfully");
             exit();
         } else {
             $error_message = "Failed to log activity. Please try again.";

@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($lastMedicationId) {
             // Redirect after successful insertion
-            header("Location: home.php?success=Medication logged successfully");
+            header("Location: index.php?success=Medication logged successfully");
             exit();
         } else {
             $error_message = "Failed to log medication. Please try again.";

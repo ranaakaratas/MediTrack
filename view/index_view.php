@@ -39,7 +39,7 @@
             <?php endif; ?>
 
             <div class="d-flex justify-content-end">
-                <a href="addMood.php?date=<?= $selected_date ?>">
+                <a href="addmood.php?date=<?= $selected_date ?>">
                     <button class="btn btn-primary" <?= $is_today ? '' : 'disabled' ?>>Log Mood</button>
                 </a>
             </div>
@@ -64,7 +64,7 @@
             <?php endif; ?>
 
             <div class="d-flex justify-content-end">
-                <a href="addActivity.php?date=<?= $selected_date ?>">
+                <a href="addactivity.php?date=<?= $selected_date ?>">
                     <button class="btn btn-primary" <?= $is_today ? '' : 'disabled' ?>>Log Activity</button>
                 </a>
             </div>
@@ -90,7 +90,7 @@
             <?php endif; ?>
 
             <div class="d-flex justify-content-end">
-                <a href="addMedication.php?date=<?= $selected_date ?>">
+                <a href="addmedication.php?date=<?= $selected_date ?>">
                     <button class="btn btn-primary" <?= $is_today ? '' : 'disabled' ?>>Log Medication</button>
                 </a>
             </div>

@@ -39,5 +39,5 @@
     </div>
     </form>
     <div class="mb-3">
-        <a href="home.php">🔙 Back to Home</a>
+        <a href="index.php">🔙 Back to Home</a>
     </div>

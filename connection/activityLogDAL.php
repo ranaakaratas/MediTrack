@@ -11,7 +11,7 @@ class ActivityLogDAL {
     }
 
     public function getActivitiesByDate($date) {
-        $sql = "SELECT * FROM activityLog WHERE DATE(timestamp) = ?";
+        $sql = "SELECT * FROM activitylog WHERE DATE(timestamp) = ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([$date]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

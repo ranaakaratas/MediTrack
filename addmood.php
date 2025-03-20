@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($lastMoodId) {
             // Redirect after successful insertion
-            header("Location: home.php?success=Mood logged successfully");
+            header("Location: index.php?success=Mood logged successfully");
             exit();
         } else {
             $error_message = "Failed to log mood. Please try again.";

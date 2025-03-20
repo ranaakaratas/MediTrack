@@ -12,7 +12,7 @@ class MedicationLogDAL {
 
 
     public function getMedicationsByDate($date) {
-        $sql = "SELECT * FROM medicationLog WHERE DATE(timestamp) = ?";
+        $sql = "SELECT * FROM medicationlog WHERE DATE(timestamp) = ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([$date]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
