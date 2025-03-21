@@ -63,7 +63,7 @@
                 </div>
                 <button type="submit" class="btn btn-success w-100">Sign Up</button>
                 <div class="text-center mt-3">
-                    <a href="login_view.php" class="text-decoration-none">Already have an account? Login</a>
+                    <a href="login.php" class="text-decoration-none">Already have an account? Login</a>
                 </div>
             </form>
         </div>
