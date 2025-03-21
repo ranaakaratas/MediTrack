@@ -26,12 +26,12 @@
             <h5 class="mb-0">Your Moods</h5>
         </div>
         <div class="card-body">
-            <?php if (!empty($mood_result)): ?>
-                <?php foreach ($mood_result as $row): ?>
+            <?php if (!empty($moodLogs)): ?>
+                <?php foreach ($moodLogs as $row): ?>
                     <div class="alert alert-info">
-                        <strong>Mood:</strong> <?= htmlspecialchars($row['mood_description'] ?? 'N/A') ?> |
-                        <strong>Energy Level:</strong> <?= htmlspecialchars($row['energy_level'] ?? 'N/A') ?> |
-                        <strong>Timestamp:</strong> <?= htmlspecialchars($row['timestamp'] ?? 'N/A') ?>
+                        <strong>Mood:</strong> <?= htmlspecialchars($row->mood->description ?? 'N/A') ?> |
+                        <strong>Energy Level:</strong> <?= htmlspecialchars($row->energyLevel ?? 'N/A') ?> |
+                        <strong>Timestamp:</strong> <?= htmlspecialchars($row->timestamp ?? 'N/A') ?>
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>
@@ -52,11 +52,11 @@
             <h5 class="mb-0">Your Activities</h5>
         </div>
         <div class="card-body">
-            <?php if (!empty($activity_result)): ?>
-                <?php foreach ($activity_result as $row): ?>
+            <?php if (!empty($activityLogs)): ?>
+                <?php foreach ($activityLogs as $row): ?>
                     <div class="alert alert-secondary">
-                        <strong>Activity:</strong> <?= htmlspecialchars($row['activity_description'] ?? 'N/A') ?> |
-                        <strong>Timestamp:</strong> <?= htmlspecialchars($row['timestamp'] ?? 'N/A') ?>
+                        <strong>Activity:</strong> <?= htmlspecialchars($row->activity->description ?? 'N/A') ?> |
+                        <strong>Timestamp:</strong> <?= htmlspecialchars($row->timestamp ?? 'N/A') ?>
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>
@@ -77,12 +77,12 @@
             <h5 class="mb-0">Your Medications</h5>
         </div>
         <div class="card-body">
-            <?php if (!empty($medication_result)): ?>
-                <?php foreach ($medication_result as $row): ?>
+            <?php if (!empty($medicationLogs)): ?>
+                <?php foreach ($medicationLogs as $row): ?>
                     <div class="alert alert-light border">
-                        <strong>Medication:</strong> <?= htmlspecialchars($row['medication_name'] ?? 'N/A') ?> |
-                        <strong>Dosage:</strong> <?= htmlspecialchars($row['dosage'] ?? 'N/A') ?> |
-                        <strong>Timestamp:</strong> <?= htmlspecialchars($row['timestamp'] ?? 'N/A') ?>
+                        <strong>Medication:</strong> <?= htmlspecialchars($row->medication->name ?? 'N/A') ?> |
+                        <strong>Dosage:</strong> <?= htmlspecialchars($row->dosage ?? 'N/A') ?> |
+                        <strong>Timestamp:</strong> <?= htmlspecialchars($row->timestamp ?? 'N/A') ?>
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>

@@ -2,7 +2,6 @@
 <div class="d-flex align-items-center justify-content-center vh-100">
     <div class="card p-4 shadow-lg" style="width: 100%; max-width: 400px; border-radius: 15px;">
         <div class="card-body">
-
         
             <h3 class="text-center mb-4">Login</h3>
             <form method="post" action="login.php"> 
