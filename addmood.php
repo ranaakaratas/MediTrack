@@ -29,6 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $moodId = $_POST['moodId'] ?? null;
     $energy_level = $_POST['energy_level'] ?? null;
     $mood_level = $_POST['mood_level'] ?? null;
+    $date = $_POST['date'] ?? date("Y-m-d H:i:s");
 
     // Validate inputs
     if (!$moodId || !$energy_level || !$mood_level) {
@@ -39,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $moodLog->moodId = $moodId;
         $moodLog->energyLevel = $energy_level;
         $moodLog->moodLevel = $mood_level;
-        $moodLog->timestamp = date('Y-m-d H:i:s');
+        $moodLog->timestamp = $date;
         $moodLog->patientId = $patient->id;
 
         // Insert into database

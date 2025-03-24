@@ -44,6 +44,8 @@ $activityDAL = new ActivityDAL();
 
 // Fetch patient details
 $patient = $_SESSION["patient"];
+// Fetch moods for the selected date
+$selectedDate = isset($_GET['date']) ? $_GET['date'] : date('Y-m-d');
 
 
 // Fetch logs for selected date
@@ -54,7 +56,7 @@ $medication_result = $medicationLogDAL->getMedicationsByDate($formatted_date);
 
 
 // Fetch mood logs
-$moodLogs = $moodLogDAL->getMoodLogsByPatientId($patient->id);
+$moodLogs = $moodLogDAL->getMoodLogsByPatientIdAndDate($patient->id, $selectedDate);
 foreach ($moodLogs as $moodLog) {
     $moodLog->patient = $patient; // Add patient object to mood log
     $moodLog->mood = $moodDAL->getMoodById($moodLog->moodId); // Add mood object to mood log
@@ -70,9 +72,7 @@ foreach ($activityLogs as $activityLog) {
 $doctor = $doctorDAL->getDoctorById($patient->doctorId);
 //$patient->doctor = $doctor;
 
-// Fetch moods for the selected date
-$selectedDate = isset($_GET['date']) ? $_GET['date'] : date('Y-m-d');
-$moods = $moodLogDAL->getMoodsByDate($selectedDate);
+
 
 
 require_once "view/master_view.php";

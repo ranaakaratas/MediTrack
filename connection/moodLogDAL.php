@@ -84,6 +84,14 @@ class MoodLogDAL {
         $query->execute([$patientId]);
         return $query->fetchAll(PDO::FETCH_CLASS,"MoodLog");
     }
+
+    public function getMoodLogsByPatientIdAndDate($patientId, $date) {
+        $query = $this->conn->prepare("SELECT * FROM moodlog WHERE patientId = ? AND DATE(`timestamp`) = ?");
+        $query->execute([$patientId, $date]);
+        return $query->fetchAll(PDO::FETCH_CLASS, "MoodLog");
+    }
+   
+    
 }
 
 ?>
