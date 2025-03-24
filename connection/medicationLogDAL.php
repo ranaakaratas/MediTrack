@@ -61,6 +61,12 @@ class MedicationLogDAL {
         return count($result) == 0 ? null : $result[0];
     }
 
+    public function getMedicationLogsByPatientIdAndDate($patientId, $date) {
+        $query = $this->conn->prepare("SELECT * FROM medicationlog WHERE patientId = ? AND DATE(`timestamp`) = ?");
+        $query->execute([$patientId, $date]);
+        return $query->fetchAll(PDO::FETCH_CLASS, "MedicationLog");
+    }
+
     // Get all medication logs
     public function getAllMedicationLogs() {
         $query = $this->conn->prepare("SELECT * FROM medicationlog");

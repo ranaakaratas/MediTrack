@@ -22,11 +22,12 @@ if (!isset($_SESSION["patient"])) {
 
 require_once "connection/patientDAL.php";
 require_once "connection/moodLogDAL.php";
-require_once "connection/activityLogDAL.php";
+require_once "connection/activityLogDAL.php"; 
 require_once "connection/medicationLogDAL.php";
 require_once "connection/doctorDAL.php";
 require_once "connection/moodDAL.php";
 require_once "connection/activityDAL.php";
+require_once "connection/medicationDAL.php";
 
 
 // Get selected date from URL or default to today
@@ -41,6 +42,7 @@ $medicationLogDAL = new MedicationLogDAL();
 $doctorDAL = new DoctorDAL();
 $moodDAL = new MoodDAL();
 $activityDAL = new ActivityDAL();
+$medicationDAL = new MedicationDAL();
 
 // Fetch patient details
 $patient = $_SESSION["patient"];
@@ -63,10 +65,17 @@ foreach ($moodLogs as $moodLog) {
 }
 
 // Fetch the activity logs
-$activityLogs = $activityLogDAL->getActivityLogsByPatientId($patient->id);
+$activityLogs = $activityLogDAL->getActivityLogsByPatientIdAndDate($patient->id, $selectedDate);
 foreach ($activityLogs as $activityLog) {
     $activityLog->patient = $patient; // Add patient object to activity log
     $activityLog->activity = $activityDAL->getActivityById($activityLog->activityId); // Add activity object to activity log
+}
+
+// Fetch the medication logs
+$medicationLogs = $medicationLogDAL->getMedicationLogsByPatientIdAndDate($patient->id, $selectedDate);
+foreach ($medicationLogs as $medicationLog) {
+    $medicationLog->patient = $patient; // Add patient object to medication log
+    $medicationLog->medication = $medicationDAL->getMedicationById($medicationLog->id); // Add medication object to medication log
 }
 
 $doctor = $doctorDAL->getDoctorById($patient->doctorId);

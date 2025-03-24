@@ -27,6 +27,7 @@ $error_message = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $activityId = $_POST['activityId'] ?? null;
+    $date = $_POST['date'] ?? date("Y-m-d H:i:s");
 
     // Validate input
     if (!$activityId) {
@@ -35,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Create an ActivityLog object
         $activityLog = new ActivityLog();
         $activityLog->activityId = $activityId;
-        $activityLog->timestamp = date('Y-m-d H:i:s');
+        $activityLog->timestamp = $date;
         $activityLog->patientId = $patient->id;
 
         // Insert into database

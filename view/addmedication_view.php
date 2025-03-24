@@ -16,6 +16,7 @@
 
 
     <input type="hidden" name="patientId" value="<?= $patient->id ?>">
+    <input type="hidden" name="date" value="<?= date('Y-m-d', strtotime($_GET['date'])) ?? date('Y-m-d H:i:s'); ?>">
 
     <div class="mb-3">
         <button class="btn btn-primary" type="submit">Log Medication</button>

@@ -28,6 +28,7 @@ $error_message = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $medicationId = $_POST['medicationId'] ?? null;
     $dosage = $_POST['dosage'] ?? null;
+    $date = $_POST['date'] ?? date("Y-m-d H:i:s");
 
     // Validate inputs
     if (!$medicationId || !$dosage) {
@@ -37,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $medicationLog = new MedicationLog();
         $medicationLog->medicationId = $medicationId;
         $medicationLog->dosage = $dosage;
-        $medicationLog->timestamp = date('Y-m-d H:i:s');
+        $medicationLog->timestamp = $date;
         $medicationLog->patientId = $patient->id;
 
         // Insert into database

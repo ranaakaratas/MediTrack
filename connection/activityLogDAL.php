@@ -69,6 +69,12 @@ class ActivityLogDAL {
         $query->execute([$patientId]);
         return $query->fetchAll(PDO::FETCH_CLASS,"ActivityLog");
     }
+
+    public function getActivityLogsByPatientIdAndDate($patientId, $date) {
+        $query = $this->conn->prepare("SELECT * FROM activitylog WHERE patientId = ? AND DATE(`timestamp`) = ?");
+        $query->execute([$patientId, $date]);
+        return $query->fetchAll(PDO::FETCH_CLASS, "ActivityLog");
+    }
 }
 
 ?>
