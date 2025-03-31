@@ -7,6 +7,7 @@ require "model/medicationLog.php";
 require "model/doctor.php";
 require "model/mood.php";
 require "model/activity.php";
+require "model/medication.php";
 
 
 $title = "MediTrack Home Page";
@@ -75,7 +76,7 @@ foreach ($activityLogs as $activityLog) {
 $medicationLogs = $medicationLogDAL->getMedicationLogsByPatientIdAndDate($patient->id, $selectedDate);
 foreach ($medicationLogs as $medicationLog) {
     $medicationLog->patient = $patient; // Add patient object to medication log
-    $medicationLog->medication = $medicationDAL->getMedicationById($medicationLog->id); // Add medication object to medication log
+    $medicationLog->medication = $medicationDAL->getMedicationById($medicationLog->medicationId); // Add medication object to medication log
 }
 
 $doctor = $doctorDAL->getDoctorById($patient->doctorId);
