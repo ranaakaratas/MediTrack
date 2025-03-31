@@ -75,6 +75,13 @@ class ActivityLogDAL {
         $query->execute([$patientId, $date]);
         return $query->fetchAll(PDO::FETCH_CLASS, "ActivityLog");
     }
+
+    public function getActivityLogsByPatientIdBetweenDates($patientId, $startDate, $endDate) {
+        $query = $this->conn->prepare("SELECT * FROM activitylog WHERE patientId = ? AND DATE(timestamp) BETWEEN ? AND ?");
+        $query->execute([$patientId, $startDate, $endDate]);
+        return $query->fetchAll(PDO::FETCH_CLASS, "ActivityLog");
+    }
+    
 }
 
 ?>

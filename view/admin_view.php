@@ -20,6 +20,16 @@
     </form>
 
     <?php if (isset($selectedPatient)): ?>
+        <form method="POST" action="download_logs.php" target="_blank">
+            <input type="hidden" name="patient_id" value="<?= htmlspecialchars($selectedPatient->id) ?>">
+            <button type="submit" class="btn btn-outline-dark my-3">
+                📄 Download Last 30 Days of Logs
+            </button>
+        </form>
+    <?php endif; ?>
+
+
+    <?php if (isset($selectedPatient)): ?>
 
         <!-- Date Picker -->
         <div class="d-flex justify-content-center my-3">

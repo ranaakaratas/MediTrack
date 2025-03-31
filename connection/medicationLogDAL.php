@@ -73,6 +73,13 @@ class MedicationLogDAL {
         $query->execute();
         return $query->fetchAll(PDO::FETCH_CLASS,"MedicationLog");
     }
+
+    public function getMedicationLogsByPatientIdBetweenDates($patientId, $startDate, $endDate) {
+        $query = $this->conn->prepare("SELECT * FROM medicationlog WHERE patientId = ? AND DATE(timestamp) BETWEEN ? AND ?");
+        $query->execute([$patientId, $startDate, $endDate]);
+        return $query->fetchAll(PDO::FETCH_CLASS, "MedicationLog");
+    }
+    
 }
 
 ?>

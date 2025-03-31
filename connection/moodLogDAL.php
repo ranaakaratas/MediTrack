@@ -97,6 +97,11 @@ class MoodLogDAL {
         return $query->fetchAll(PDO::FETCH_CLASS, "MoodLog");
     }
     
+    public function getMoodLogsByPatientIdBetweenDates($patientId, $startDate, $endDate) {
+        $query = $this->conn->prepare("SELECT * FROM moodlog WHERE patientId = ? AND DATE(timestamp) BETWEEN ? AND ?");
+        $query->execute([$patientId, $startDate, $endDate]);
+        return $query->fetchAll(PDO::FETCH_CLASS, "MoodLog");
+    }
     
 }
 
