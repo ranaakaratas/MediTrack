@@ -5,8 +5,9 @@ class Doctor {
     private $name; // Doctor's full name
     private $specialty; // Medical specialty of the doctor
     private $contactInfo; // Contact information (e.g., phone or email)
-    private $hospital; // Hospital where the doctor works
-
+    private $hospital;// Hospital where the doctor works
+    private $password; 
+    
     // Method to get full details as a formatted string
     public function getFullDetails() {
         return "$this->id, $this->name, $this->specialty, $this->contactInfo, $this->hospital";

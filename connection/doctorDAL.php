@@ -12,26 +12,28 @@ class DoctorDAL {
 
     // Insert method
     public function insertDoctor($doctor) {
-        $sql = "INSERT INTO doctor (id, name, specialty, contactInfo, hospital) VALUES (?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO doctor (id, name, specialty, contactInfo, hospital) VALUES (?, ?, ?, ?, ?,?)";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute([
             $doctor->id,
             $doctor->name,
             $doctor->specialty,
             $doctor->contactInfo,
-            $doctor->hospital
+            $doctor->hospital,
+            $doctor->password
         ]);
     }
 
     // Update method
     public function updateDoctor($doctor) {
-        $sql = "UPDATE doctor SET name = ?, specialty = ?, contactInfo = ?, hospital = ? WHERE id = ?";
+        $sql = "UPDATE doctor SET name = ?, specialty = ?, contactInfo = ?, hospital = ?, password = ? WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute([
             $doctor->name,
             $doctor->specialty,
             $doctor->contactInfo,
             $doctor->hospital,
+            $doctor->password,
             $doctor->id
         ]);
     }
@@ -56,6 +58,14 @@ class DoctorDAL {
         $query = $this->conn->prepare("SELECT * FROM doctor");
         $query->execute();
         return $query->fetchAll(PDO::FETCH_CLASS,"Doctor");
+    }
+
+    // Check doctor login credentials
+    public function checkDoctorLogin($contactInfo, $password) {
+        $query = $this->conn->prepare("SELECT * FROM Doctor WHERE contactInfo = ? AND password = ?");
+        $query->execute([$contactInfo, $password]);
+        $result = $query->fetchAll(PDO::FETCH_CLASS, "Doctor");
+        return count($result) == 0 ? null : $result[0];
     }
 }
 

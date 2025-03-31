@@ -91,6 +91,12 @@ class MoodLogDAL {
         return $query->fetchAll(PDO::FETCH_CLASS, "MoodLog");
     }
    
+    public function getLogsByPatientId($patientId) {
+        $query = $this->conn->prepare("SELECT * FROM moodLog WHERE patientId = ?");
+        $query->execute([$patientId]);
+        return $query->fetchAll(PDO::FETCH_CLASS, "MoodLog");
+    }
+    
     
 }
 

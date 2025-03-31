@@ -73,6 +73,15 @@ class PatientDAL {
         $result = $query->fetchAll(PDO::FETCH_CLASS, "Patient");
         return count($result) == 0 ? null : $result[0];
     }
+
+    // Get all patients assigned to a specific doctor
+    public function getPatientsByDoctorId($doctorId) {
+        $query = $this->conn->prepare("SELECT * FROM patient WHERE doctorId = ?");
+        $query->execute([$doctorId]);
+        return $query->fetchAll(PDO::FETCH_CLASS, "Patient");
+    }
+
+    
 }
 
 ?>
