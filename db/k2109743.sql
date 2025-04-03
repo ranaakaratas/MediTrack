@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 04, 2025 at 01:26 PM
+-- Generation Time: Apr 03, 2025 at 09:19 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -61,7 +61,10 @@ CREATE TABLE `activitylog` (
 INSERT INTO `activitylog` (`id`, `activityId`, `timestamp`, `patientId`) VALUES
 (1, 1, '2025-02-04 12:20:38', 2),
 (2, 2, '2025-02-04 12:20:38', 2),
-(3, 3, '2025-02-04 12:20:38', 2);
+(3, 3, '2025-02-04 12:20:38', 2),
+(4, 2, '2025-03-23 00:00:00', 3),
+(5, 3, '2025-03-25 00:00:00', 3),
+(6, 1, '2025-03-30 00:00:00', 3);
 
 -- --------------------------------------------------------
 
@@ -74,18 +77,19 @@ CREATE TABLE `doctor` (
   `name` varchar(80) NOT NULL,
   `specialty` varchar(40) NOT NULL,
   `contactInfo` varchar(80) NOT NULL,
-  `hospital` varchar(80) NOT NULL
+  `hospital` varchar(80) NOT NULL,
+  `password` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `doctor`
 --
 
-INSERT INTO `doctor` (`id`, `name`, `specialty`, `contactInfo`, `hospital`) VALUES
-(1, 'Dr Oliver Foster', 'Neurology', 'dr@info.com', 'Nuffield Hospital'),
-(2, 'Dr. Olivia Smith', 'Cardiology', 'olivia@hospital.com', 'General Hospital'),
-(3, 'Dr. John Doe', 'Neurology', 'johndoe@clinic.com', 'City Clinic'),
-(4, 'Dr. Sarah Johnson', 'Orthopedics', 'sarah@medcenter.com', 'Medical Center');
+INSERT INTO `doctor` (`id`, `name`, `specialty`, `contactInfo`, `hospital`, `password`) VALUES
+(1, 'Dr Oliver Foster', 'Neurology', 'dr@info.com', 'Nuffield Hospital', 'oliver123'),
+(2, 'Dr. Olivia Smith', 'Cardiology', 'olivia@hospital.com', 'General Hospital', 'olivia123'),
+(3, 'Dr. John Doe', 'Neurology', 'johndoe@clinic.com', 'City Clinic', 'john123'),
+(4, 'Dr. Sarah Johnson', 'Cardiology', 'sarah@medcenter.com', 'Medical Center', 'sarah123');
 
 -- --------------------------------------------------------
 
@@ -128,7 +132,9 @@ CREATE TABLE `medicationlog` (
 INSERT INTO `medicationlog` (`id`, `medicationId`, `timestamp`, `dosage`, `patientId`) VALUES
 (1, 1, '2025-02-04 12:21:33', 100, 2),
 (2, 2, '2025-02-04 12:21:33', 200, 2),
-(3, 3, '2025-02-04 12:21:33', 500, 2);
+(3, 3, '2025-02-04 12:21:33', 500, 2),
+(4, 1, '2025-03-23 00:00:00', 25, 3),
+(5, 1, '2025-03-30 23:00:00', 12, 3);
 
 -- --------------------------------------------------------
 
@@ -172,7 +178,10 @@ CREATE TABLE `moodlog` (
 INSERT INTO `moodlog` (`id`, `moodId`, `energyLevel`, `moodLevel`, `timestamp`, `patientId`) VALUES
 (1, 1, 8, 9, '2025-02-04 12:22:16', 2),
 (2, 2, 5, 4, '2025-02-04 12:22:16', 2),
-(3, 3, 7, 8, '2025-02-04 12:22:16', 2);
+(3, 3, 7, 8, '2025-02-04 12:22:16', 2),
+(12, 1, 1, 1, '2025-03-26 00:00:00', 3),
+(13, 1, 1, 1, '2025-03-22 00:00:00', 3),
+(14, 3, 3, 3, '2025-03-29 00:00:00', 3);
 
 -- --------------------------------------------------------
 
@@ -334,7 +343,7 @@ ALTER TABLE `activity`
 -- AUTO_INCREMENT for table `activitylog`
 --
 ALTER TABLE `activitylog`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `doctor`
@@ -352,7 +361,7 @@ ALTER TABLE `medication`
 -- AUTO_INCREMENT for table `medicationlog`
 --
 ALTER TABLE `medicationlog`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `mood`
@@ -364,7 +373,7 @@ ALTER TABLE `mood`
 -- AUTO_INCREMENT for table `moodlog`
 --
 ALTER TABLE `moodlog`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `patient`
