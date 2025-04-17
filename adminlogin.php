@@ -27,7 +27,6 @@ if (isset($_REQUEST["contactInfo"]) && isset($_REQUEST["password"]))
     else
     {
         $error = "Invalid email or password";
-        echo("Login failed");
     }
     
 }

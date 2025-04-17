@@ -5,7 +5,7 @@
     <div class="alert alert-danger"><?= htmlspecialchars($error_message) ?></div>
     <?php endif; ?>
 
-    <form action="addMood.php" method="POST">
+    <form action="addmood.php" method="POST">
     <div class="mb-3">
         <label for="moodId">Select Your Mood:</label>
         <select class="form-select" id="moodId" name="moodId" required>

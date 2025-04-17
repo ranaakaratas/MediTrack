@@ -28,7 +28,6 @@ if (isset($_REQUEST["email"]) && isset($_REQUEST["password"]))
     else
     {
         $error = "Invalid email or password";
-        echo("Login failed");
     }
 }
 require_once "view/master_view.php";

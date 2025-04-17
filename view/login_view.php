@@ -4,6 +4,16 @@
         <div class="card-body">
         
             <h3 class="text-center mb-4">Login</h3>
+            
+            <?php
+                if (isset($error))
+                {
+                    echo "<div class='alert alert-danger text-center' role='alert'>";
+                    echo $error;
+                    echo "</div>";
+                }
+            ?>
+            
             <form method="post" action="login.php"> 
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Email Address</label>

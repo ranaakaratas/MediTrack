@@ -62,7 +62,7 @@ class DoctorDAL {
 
     // Check doctor login credentials
     public function checkDoctorLogin($contactInfo, $password) {
-        $query = $this->conn->prepare("SELECT * FROM Doctor WHERE contactInfo = ? AND password = ?");
+        $query = $this->conn->prepare("SELECT * FROM doctor WHERE contactInfo = ? AND password = ?");
         $query->execute([$contactInfo, $password]);
         $result = $query->fetchAll(PDO::FETCH_CLASS, "Doctor");
         return count($result) == 0 ? null : $result[0];

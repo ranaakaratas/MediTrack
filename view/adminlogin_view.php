@@ -3,9 +3,14 @@
     <div class="card shadow p-4" style="min-width: 350px;">
         <h3 class="mb-4 text-center">Clinician Login</h3>
 
-        <?php if (isset($loginError) && $loginError): ?>
-            <div class="alert alert-danger"><?php echo htmlspecialchars($loginError); ?></div>
-        <?php endif; ?>
+        <?php
+                if (isset($error))
+                {
+                    echo "<div class='alert alert-danger text-center' role='alert'>";
+                    echo $error;
+                    echo "</div>";
+                }
+        ?>
 
         <form method="POST" action="adminlogin.php">
             <div class="mb-3">

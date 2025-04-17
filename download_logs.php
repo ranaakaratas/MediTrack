@@ -8,6 +8,10 @@ require "connection/medicationLogDAL.php";
 require "connection/activityDAL.php";
 require "connection/medicationDAL.php";
 require "connection/moodDAL.php";
+require_once "model/mood.php";
+require_once "model/activity.php";
+require_once "model/medication.php";
+
 
 if (!isset($_POST['patient_id'])) {
     die("Patient ID not provided.");
@@ -47,8 +51,7 @@ foreach ($activityLogs as $log) {
     fputcsv($output, [
         'Activity',
         $log->timestamp,
-        $log->activity->name ?? 'N/A',
-        "Duration: {$log->duration} mins"
+        $log->activity->description ?? 'N/A'
     ]);
 }
 
