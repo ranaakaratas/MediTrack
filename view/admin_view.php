@@ -113,6 +113,10 @@
     <?php elseif (isset($_GET['patient_id'])): ?>
         <p class="mt-4 text-muted">No logs found for this patient.</p>
     <?php endif; ?>
-
+    
+    <!-- Logout Button -->
+    <div class="text-center my-4">
+        <a href="logout.php" class="btn btn-danger">Logout</a>
+    </div>
 </div>
 
