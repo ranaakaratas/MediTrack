@@ -2,6 +2,14 @@
     <div class="card p-4 shadow-lg" style="width: 100%; max-width: 400px; border-radius: 15px;">
         <div class="card-body">
             <h3 class="text-center mb-4">Create an Account</h3>
+            <?php
+                if (isset($error))
+                {
+                    echo "<div class='alert alert-danger text-center' role='alert'>";
+                    echo $error;
+                    echo "</div>";
+                }
+            ?>
             <form method="post" action="signup.php">
                 <div class="mb-3">
                     <label for="signupName" class="form-label">Full Name</label>
@@ -27,18 +35,14 @@
                     <label for="signupMedicalNotes" class="form-label">Medical Notes</label>
                     <textarea class="form-control" id="signupMedicalNotes" name="medicalNotes" rows="3"></textarea>
                 </div>
+               
                 <div class="mb-3">
-                    <label for="signupDoctorId" class="form-label">Doctor ID</label>
-                    <?php if (!empty($doctors)): ?>
-                    <ul class="list-group mb-3">
+                    <label for="doctorId">Select Your Doctor:</label>
+                    <select class="form-select" id="doctorId" name="doctorId" required>
                         <?php foreach ($doctors as $doctor): ?>
-                            <li class="list-group-item">
-                                <strong>Doctor:</strong> <?= htmlspecialchars($doctor['name']) ?> |
-                                <input type="radio" name="doctorId" value="<?= $doctor['id'] ?>" required>
-                            </li>
+                            <option value="<?= $doctor->id ?>"><?= $doctor->name ?></option>
                         <?php endforeach; ?>
-                    </ul>
-                <?php endif; ?>
+                    </select>
                 </div>
                 <div class="mb-3">
                     <label for="signupEmail" class="form-label">Email Address</label>

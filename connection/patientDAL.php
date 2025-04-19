@@ -14,7 +14,7 @@ class PatientDAL {
     public function insertPatient($patient) {
         $sql = "INSERT INTO patient (id, dob, name, gender, phoneNo, medicalNotes, doctorId, email, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->conn->prepare($sql);
-        return $stmt->execute([
+        $stmt->execute([
             $patient->id,
             $patient->dob,
             $patient->name,
@@ -25,6 +25,12 @@ class PatientDAL {
             $patient->email,
             $patient->password
         ]);
+        $lastId = $this->conn->lastInsertId(); // Get the last inserted ID
+        if ($lastId) { // Check if the last ID is valid
+            $patient->id = $lastId; // Set the ID of the patient object to the last inserted ID
+            return true; // Return true if insertion was successful
+        }
+        return false; // Return false if insertion failed
     }
 
     // Update method
