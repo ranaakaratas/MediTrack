@@ -20,6 +20,13 @@
     </form>
 
     <?php if (isset($selectedPatient)): ?>
+        <div class="alert alert-info my-3">
+            <strong>Medical Notes:</strong> <?= htmlspecialchars($selectedPatient->medicalNotes) ?>
+        </div>
+    <?php endif; ?>
+
+
+    <?php if (isset($selectedPatient)): ?>
         <form method="POST" action="download_logs.php" target="_blank">
             <input type="hidden" name="patient_id" value="<?= htmlspecialchars($selectedPatient->id) ?>">
             <button type="submit" class="btn btn-outline-dark my-3">
